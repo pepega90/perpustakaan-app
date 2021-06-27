@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login Admin Perpus App</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+ {% load static %}
+  <link rel="stylesheet" href="{% static 'perpus/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'perpus/dist/css/adminlte.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'perpus/dist/css/adminlte.min.css' %}">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <!-- /.login-logo -->
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <h1 class="h5">Aplikas Perpus <b>SMK Negeri 10 </b>Pepega</h1>
+    </div>
+    <div class="card-body">
+    <!--   <p class="text-center h1 mb-3">
+      <i class="fas fa-user"></i>
+    </p> -->
+      <form method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input type="text" name="username" class="form-control" placeholder="Username">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" name="password" class="form-control" placeholder="Password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">Login</button>
+      </form>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+</div>
+<!-- jQuery -->
+<script src="{% static 'perpus/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'perpus/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'perpus/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'perpus/dist/js/demo.js' %}"></script>
+</body>
+</html>

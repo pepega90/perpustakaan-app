@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Tambah Anggota{% endblock %}
+{% block content %}
+	<div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Tambah Anggota</h3>
+              </div>
+              <form method="post" enctype="multipart/form-data">
+                <div class="card-body">
+              	{% csrf_token %}
+                {{form.as_p}}
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+              </form>
+            </div>
+{% endblock %}

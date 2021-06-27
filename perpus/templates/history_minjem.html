@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}History Peminjaman Buku{% endblock %}
+{% block content %}
+	<div class="card">
+              <div class="card-header">
+                <h3 class="card-title">History Peminjaman Buku</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form method="post" action="#">
+                  {% csrf_token %}
+                    <div class="form-group">
+                      <label for="start">Start Date</label>
+                      <input type="date" class="form-control" name="start"/>
+                    </div>
+                     <div class="form-group">
+                      <label for="end">End Date</label>
+                      <input type="date" class="form-control" name="end"/>
+                    </div>
+                    <button value="cari_data" name="cari_data" class="btn mb-3 btn-warning">Cari Data</button>
+                </form>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>No Transaksi</th>
+                      <th>Tanggal Pengembalian</th>
+                      <th>Peminjam</th>
+                      <th>Buku yang di pinjam</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if page_obj %}
+                    	{% for minjem in page_obj %}
+                        <tr>
+                          <td>{{minjem.no_transaksi}}</td>
+                          <td>{{minjem.tgl_kembali|date:"D d M Y"}}</td>
+                          <td>{{minjem.orang.nama}}</td>
+                          <td>
+                          <ol>
+                            {% for book in minjem.buku.all %}
+                              <li>{{book.judul_buku}}</li>
+                            {% endfor %}
+                          </ol>
+                        </td>
+                        </tr>
+                      {% endfor %}
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">«</a></li>
+                  {% endif %}
+                  <li class="page-item"><a name='page' class="page-link">{{ page_obj.number }}</a></li>
+                  {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">»</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+{% endblock %}

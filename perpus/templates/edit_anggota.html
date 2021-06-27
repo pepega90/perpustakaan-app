@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Edit Anggota{% endblock %}
+{% block content %}
+	<div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Edit Anggota</h3>
+              </div>
+              <form method="post" enctype="multipart/form-data">
+                <div class="card-body">
+              	{% csrf_token %}
+                {{form.as_p}}
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-success">Update</button>
+                  <button name='hapus' value='delete' type="submit" class="btn btn-success">Update and Change Photo</button>
+                </div>
+              </form>
+            </div>
+            <script>
+                let body_card = document.querySelector('.card-body');
+                let  img_url = document.querySelector('label[for="id_foto"]').nextSibling.nextSibling.getAttribute('href');
+                let img = document.createElement('img');
+                img.setAttribute('src', img_url);
+                img.setAttribute('width', 150);
+                img.setAttribute('height', 150);
+                body_card.appendChild(img);
+            </script>
+{% endblock %}

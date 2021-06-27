@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Pengembalian Buku{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+    	<div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Mengembalikan Buku</h3>
+                  </div>
+                  <form method="post">
+                    <div class="card-body">
+                  	{% csrf_token %}
+                    {{form.as_p}}
+                    </div>
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </form>
+                </div>
+{% else %}
+    <div class="error-page">
+        <h2 class="headline text-warning"> 404</h2>
+
+        <div class="error-content">
+          <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
+
+          <p>
+            Untuk melihat halaman ini anda harus <a href="{% url 'login' %}">login</a> terlebih dahulu
+          </p>
+        </div>
+        <!-- /.error-content -->
+      </div>
+{% endif %}
+{% endblock %}

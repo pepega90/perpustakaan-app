@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}Buku{% endblock %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+  <a href="{% url 'create_buku' %}" class="btn btn-info mb-3">Tambah Buku</a>
+  	<div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Daftar Buku</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Gambar Buku</th>
+                        <th>Judul Buku</th>
+                        <th>Pengarang</th>
+                        <th>Description</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    	{% for buku in object_list %}
+  	                    <tr>
+  	                      <td>
+                            {% if buku.foto_buku %}
+  	                      	  <img src="{{buku.foto_buku.url}}" alt="gambar_buku" width="100" height="100" />
+                            {% else %}
+                                <img src="{% static 'perpus/default/default_book.jpg' %}" alt="gambar_buku" width="100" height="100" />
+                            {% endif %}
+  	                      </td>
+  	                      <td>{{buku.judul_buku}}</td>
+  	                      <td>
+  	                        {{buku.pengarang}}
+  	                      </td>
+                          <td>
+                            {{buku.klasifikasi|slice:":20"}}...
+                          </td>
+                          <td>
+                            <div class="d-flex justify-content-around">
+                                <a href='{% url "edit_buku" buku.pk %}' class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#id{{buku.id}}">
+                                  <i class="fas fa-trash"></i>
+                                </button>
+                                <div class="modal fade" id="id{{buku.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title text-bold" id="exampleModalLabel">Peringatan</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <h5>Apakah kamu yakin ingin menghapus data ini?</h5>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <form method="post" action="{% url 'hapus_buku' buku.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Hapus</button>
+                                      </form>
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+  	                    </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
+                  <ul class="pagination pagination-sm m-0 float-right">
+                    {% if page_obj.has_previous %}
+                      <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">«</a></li>
+                    {% endif %}
+                    <li class="page-item"><a class="page-link">{{ page_obj.number }}</a></li>
+                    {% if page_obj.has_next %}
+                      <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">»</a></li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+{% else %}
+  <div class="error-page">
+        <h2 class="headline text-warning"> 404</h2>
+
+        <div class="error-content">
+          <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
+
+          <p>
+            Untuk melihat halaman ini anda harus <a href="{% url 'login' %}">login</a> terlebih dahulu
+          </p>
+        </div>
+        <!-- /.error-content -->
+      </div>
+{% endif %}
+{% endblock %}

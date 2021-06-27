@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Peminjaman Buku{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="row">
+    		<div class="col-md">
+    			<div class="card card-warning">
+                  <div class="card-header">
+                    <h3 class="card-title">Pinjam Buku</h3>
+                  </div>
+                  <form method="post">
+                    <div class="card-body">
+                    {% csrf_token %}
+                  	{{form}}
+                    </div>
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-warning">Submit</button>
+                    </div>
+                  </form>
+                </div>
+    		</div>
+    </div>
+      <script>
+        let select_buku = document.getElementById('id_buku');
+          let d = new Date();
+          let no_transaksi = document.getElementById('id_no_transaksi');
+          no_transaksi.value = parseInt(d.getFullYear().toString() + d.getDate().toString() + d.getMonth().toString() + d.getMilliseconds().toString());
+
+          select_buku.classList.add('form-control');
+      </script>
+{% else %}
+    <div class="error-page">
+        <h2 class="headline text-warning"> 404</h2>
+
+        <div class="error-content">
+          <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
+
+          <p>
+            Untuk melihat halaman ini anda harus <a href="{% url 'login' %}">login</a> terlebih dahulu
+          </p>
+        </div>
+        <!-- /.error-content -->
+      </div>
+{% endif %}
+{% endblock %}

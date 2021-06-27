@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}History Pengembalian Buku{% endblock %}
+{% block content %}
+	<div class="card">
+              <div class="card-header">
+                <h3 class="card-title">History Pengembalian Buku</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Minjem Transaksi</th>
+                      <th>Peminjam</th>
+                      <th>Tanggal Peminjaman</th>
+                      <th>Denda</th>
+                      <th>Nominal Denda</th>
+                      <th>Buku yang dikembalikan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if page_obj %}
+                    	{% for kembali in page_obj %}
+                        <tr>
+                          <td>{{kembali.minjem_transaksi.no_transaksi}}</td>
+                          <td>
+                            {{kembali.minjem_transaksi.orang.nama}}
+                          </td>
+                          <td>{{kembali.minjem_transaksi.tgl_pinjam|date:"D d M Y"}}</td>
+                          <td>{{kembali.is_denda}}</td>
+                          {% if kembali.nominal_denda %}
+                            <td>Rp{{kembali.nominal_denda}}</td>
+                          {% else %}
+                            <td>
+                                Tidak ada
+                            </td>
+                          {% endif %}
+                          <td>
+                          <ol>
+                            {% for book in kembali.minjem_transaksi.buku.all %}
+                              <li>{{book.judul_buku}}</li>
+                            {% endfor %}
+                          </ol>
+                        </td>
+                        </tr>
+                      {% endfor %}
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">«</a></li>
+                  {% endif %}
+                  <li class="page-item"><a name='page' class="page-link">{{ page_obj.number }}</a></li>
+                  {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">»</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+{% endblock %}

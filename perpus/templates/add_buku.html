@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Tambah Buku{% endblock %}
+{% block content %}
+	<div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Tambah Buku</h3>
+              </div>
+              <form method="post" enctype="multipart/form-data">
+                <div class="card-body">
+              	{% csrf_token %}
+                {{form.as_p}}
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Submit</button>
+                </div>
+              </form>
+            </div>
+            <script>
+                let buku_el = document.getElementById('id_kode_buku');
+                let d = new Date();
+                buku_el.value = d.getMilliseconds();
+            </script>
+{% endblock %}
